@@ -1,9 +1,9 @@
 import React from "react";
 
-// Import Components
+// Import components
 import ContactList from "./Contact list/ContactList";
 
-const Main = () => {
+const Main = ({ List }) => {
     return (
         <div className="col-lg-9 col-md-8 col-sm-12">
             <div className="contacts-list">
@@ -42,7 +42,7 @@ const Main = () => {
                             </div>
                         </div>
                     </div>
-                    <ContactList></ContactList>
+                    <ContactList List={List} />
                 </form>
             </div>
         </div>

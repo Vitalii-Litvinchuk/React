@@ -258,8 +258,8 @@ input {
 }
 .contacts-list .unit .name .avatar {
   display: inline-block;
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   border-radius: 20px;
   margin: 0 16px 0 0;
   vertical-align: top;

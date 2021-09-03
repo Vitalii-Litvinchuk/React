@@ -1,10 +1,17 @@
-// Import commponents
-import ContactItem from "./Contact item/ContactItem"
+// Import components
+import ContactItem from "./Contact item/ContactItem";
 
-const ContactList = () => {
+const ContactList = ({ List }) => {
+    const item = List.map(listItem => {
+        return (
+            <ContactItem key={listItem.Id} {...listItem}/>
+        )
+    });
     return (
-        <ContactItem />
+        <section>
+            {item}
+        </section>
     )
 }
 
-export default ContactList
+export default ContactList;
