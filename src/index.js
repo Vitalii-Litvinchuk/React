@@ -39,16 +39,47 @@ class App extends Component {
         ]
     }
 
+    onChangeStatus = (Id) =>{
+        const index = this.state.ContactList.findIndex(e => e.Id === Id);
+        let contact = this.state.ContactList[index];
+        switch (contact.Status) {
+            case "Friend": contact.Status = "Work"; break;
+            case "Work":contact.Status = "Private"; break;
+            case "Private":contact.Status = "Family"; break;
+            case "Family":contact.Status = "Friend"; break;
+            default: break;
+        }
+
+        const tempList = this.state.ContactList.slice();
+        tempList[index] = contact;
+        this.setState({
+            ContactList: tempList
+        });
+    }
+
+    onClickDelete = (Id) =>{
+        const index = this.state.ContactList.findIndex(e => e.Id === Id);
+        const partTempListOne = this.state.ContactList.slice(0, index);
+        const partTempListTwo = this.state.ContactList.slice(index + 1);
+        const tempList = {...partTempListOne, ...partTempListTwo}
+
+        this.setState({
+            ContactList: tempList 
+        });
+    }
+
+
     render() {
         const { ContactList } = this.state;
         return (
+            
             <div className="container bootstrap snippets bootdeys bootdey">
                 <div className="row decor-default">
-                    <SideBar />
-                    <Main List={ContactList} />
+                    <SideBar Contacts={ContactList}/>
+                    <Main List={ContactList} onChangeStatus={this.onChangeStatus} onClickDelete={this.onClickDelete}/>
                 </div>
             </div>
-
+            
         )
     }
 }

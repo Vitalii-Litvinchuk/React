@@ -3,7 +3,7 @@ import React from "react";
 // Import components
 import ContactList from "./Contact list/ContactList";
 
-const Main = ({ List }) => {
+const Main = ({ List, onChangeStatus, onClickDelete }) => {
     return (
         <div className="col-lg-9 col-md-8 col-sm-12">
             <div className="contacts-list">
@@ -42,7 +42,7 @@ const Main = ({ List }) => {
                             </div>
                         </div>
                     </div>
-                    <ContactList List={List} />
+                    <ContactList List={List} onChangeStatus={onChangeStatus} onClickDelete={onClickDelete} />
                 </form>
             </div>
         </div>

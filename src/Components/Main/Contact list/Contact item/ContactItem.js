@@ -2,7 +2,7 @@
 import GetStatus from "../../Status/Status";
 
 
-const ContactItem = ({ Name, Email, Phone, Status, Image }) => {
+const ContactItem = ({  Name, Email, Phone, Status, Image, onChangeStatus, onClickDelete }) => {
     return (
         <div className="unit" >
             <div className="field name">
@@ -18,7 +18,7 @@ const ContactItem = ({ Name, Email, Phone, Status, Image }) => {
                     </div>
                     <div className="col-4">
                         {Name}
-                        <GetStatus Status={Status}/>
+                        <GetStatus Status={Status} onChangeStatus={onChangeStatus} />
                     </div>
                 </div>
             </div>
@@ -26,7 +26,15 @@ const ContactItem = ({ Name, Email, Phone, Status, Image }) => {
                 {Phone}
             </div>
             <div className="field email">
-                {Email}
+                <div className="row">
+                    {Email}
+                </div>
+                <div className="row">
+                    <div className="icons">
+                        <i className="far fa-edit fa-2x"></i>
+                        <i className="far fa-trash-alt fa-2x" onClick={onClickDelete}></i>
+                    </div>
+                </div>
             </div>
         </div >
     )
