@@ -2,7 +2,9 @@
 import GetStatus from "../../Status/Status";
 
 
-const ContactItem = ({  Name, Email, Phone, Status, Image, onChangeStatus, onClickDelete }) => {
+const ContactItem = ({  Name, Email, Phone, Status, Gender, Image, onChangeStatus, onClickDelete }) => {
+
+    const img = `https://api.randomuser.me/portraits/${Gender}/${Image}.jpg`
     return (
         <div className="unit" >
             <div className="field name">
@@ -14,7 +16,7 @@ const ContactItem = ({  Name, Email, Phone, Status, Image, onChangeStatus, onCli
                 </div>
                 <div className="row">
                     <div className="col-3">
-                        <img src={Image} alt="image" className="avatar" />
+                        <img src={img} alt="..." className="avatar" />
                     </div>
                     <div className="col-4">
                         {Name}

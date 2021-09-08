@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Import css
 import "./index.css";
 
 // Import components
-import SideBar from "./Components/SideBar/SideBar"
 import Main from "./Components/Main/Main";
-
+import NotFoundPage from "./Components/NotFoundPage/NotFoundPage";
+import AddContact from "./Components/AddContact/AddContact";
 
 class App extends Component {
     state = {
@@ -18,7 +19,8 @@ class App extends Component {
                 Phone: "+1-800-600-9898",
                 Email: "Verdnam@gmail.com",
                 Status: "Friend",
-                Image: "https://api.randomuser.me/portraits/men/45.jpg"
+                Gender: "men",
+                Image: "45"
             },
             {
                 Id: 2,
@@ -26,7 +28,8 @@ class App extends Component {
                 Phone: "+1-800-132-7841",
                 Email: "camt@gmail.com",
                 Status: "Private",
-                Image: "https://api.randomuser.me/portraits/women/18.jpg"
+                Gender: "women",
+                Image: "18"
             },
             {
                 Id: 3,
@@ -34,19 +37,20 @@ class App extends Component {
                 Phone: "+1-800-225-1587",
                 Email: "stef@gmail.com",
                 Status: "Work",
-                Image: "https://api.randomuser.me/portraits/women/39.jpg"
+                Gender: "women",
+                Image: "39"
             }
         ]
     }
 
-    onChangeStatus = (Id) =>{
+    onChangeStatus = (Id) => {
         const index = this.state.ContactList.findIndex(e => e.Id === Id);
         let contact = this.state.ContactList[index];
         switch (contact.Status) {
             case "Friend": contact.Status = "Work"; break;
-            case "Work":contact.Status = "Private"; break;
-            case "Private":contact.Status = "Family"; break;
-            case "Family":contact.Status = "Friend"; break;
+            case "Work": contact.Status = "Private"; break;
+            case "Private": contact.Status = "Family"; break;
+            case "Family": contact.Status = "Friend"; break;
             default: break;
         }
 
@@ -57,29 +61,44 @@ class App extends Component {
         });
     }
 
-    onClickDelete = (Id) =>{
+    onClickDelete = (Id) => {
         const index = this.state.ContactList.findIndex(e => e.Id === Id);
         const partTempListOne = this.state.ContactList.slice(0, index);
         const partTempListTwo = this.state.ContactList.slice(index + 1);
-        const tempList = {...partTempListOne, ...partTempListTwo}
+        const tempList = [...partTempListOne, ...partTempListTwo]
 
         this.setState({
-            ContactList: tempList 
-        });
+            ContactList: tempList
+        })
     }
 
+    onAddNewContact = (newContact) =>{
+        const { Name, Email, Phone, Status, Image, Gender } = newContact;
+        this.state.ContactList.push(
+            {
+                Id: this.state.ContactList.length + 1,
+                Name,
+                Phone,
+                Email,
+                Status,
+                Gender,
+                Image
+            }
+        );
+        console.log(this.state.ContactList[this.state.ContactList.length -1]);
+    }
 
     render() {
         const { ContactList } = this.state;
         return (
-            
-            <div className="container bootstrap snippets bootdeys bootdey">
-                <div className="row decor-default">
-                    <SideBar Contacts={ContactList}/>
-                    <Main List={ContactList} onChangeStatus={this.onChangeStatus} onClickDelete={this.onClickDelete}/>
-                </div>
-            </div>
-            
+            <Router>
+                <Switch>
+                    <Route path="/" exact render={() => (<Main List={ContactList} onChangeStatus={this.onChangeStatus} onClickDelete={this.onClickDelete} />)} />
+                    <Route path="/add-new-contact" exact render={() => (<AddContact onAddNewContact={this.onAddNewContact}/>)}/>
+                    <Route path="*"component={NotFoundPage}/>
+                </Switch>
+            </Router>
+
         )
     }
 }

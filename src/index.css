@@ -307,3 +307,49 @@ input {
 .icons .fa-edit{
   color: #f2a654;
 }
+
+.body-style{
+  display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-align-content: center;
+    align-content: center;
+    margin-top:30vh;
+    font-family:Sans-serif;
+  }
+   
+    
+.button-style{
+    color:white;
+    background-color:#34ADF6;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    margin: 4px 2px;
+    cursor: pointer; 
+    border: none;
+    border-radius:4px;
+  }
+
+  .body-style :last-child{
+    width:45%;
+    float:left;
+    margin-left:50px;
+  }
+
+  .body-style :last-child h1 {
+    font-weight:bold;
+    font-size:34px;
+  }
+
+  .body-style :last-child div {
+    font-size:25px;
+    text-align:left;
+  }
+
+  .body-style img{
+    float: right;
+  }
+  
