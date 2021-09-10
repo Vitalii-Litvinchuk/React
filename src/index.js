@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
 // Import css
 import "./index.css";
@@ -14,7 +15,7 @@ class App extends Component {
     state = {
         ContactList: [
             {
-                Id: 1,
+                Id: uuidv4(),
                 Name: " Alexander Verdnam",
                 Phone: "+1-800-600-9898",
                 Email: "Verdnam@gmail.com",
@@ -23,7 +24,7 @@ class App extends Component {
                 Image: "45"
             },
             {
-                Id: 2,
+                Id: uuidv4(),
                 Name: "Camilla Terry",
                 Phone: "+1-800-132-7841",
                 Email: "camt@gmail.com",
@@ -32,7 +33,7 @@ class App extends Component {
                 Image: "18"
             },
             {
-                Id: 3,
+                Id: uuidv4(),
                 Name: "Stafani Jamson",
                 Phone: "+1-800-225-1587",
                 Email: "stef@gmail.com",
@@ -74,9 +75,9 @@ class App extends Component {
 
     onAddNewContact = (newContact) =>{
         const { Name, Email, Phone, Status, Image, Gender } = newContact;
-        this.state.ContactList.push(
+        this.state.ContactList.unshift(
             {
-                Id: this.state.ContactList.length + 1,
+                Id: uuidv4(),
                 Name,
                 Phone,
                 Email,
@@ -85,7 +86,6 @@ class App extends Component {
                 Image
             }
         );
-        console.log(this.state.ContactList[this.state.ContactList.length -1]);
     }
 
     render() {

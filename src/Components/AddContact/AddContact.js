@@ -135,7 +135,7 @@ class AddContact extends Component {
                             <button type="submit" className="btn btn-primary mt-3">Add</button>
                         </form>
                         <div className="col-4">
-                            <img src={img} className="rounded float-left" alt="..." />
+                            <img src={img} className="rounded float-left avatar" alt="..." />
                         </div>
                     </div>
                 </div>
