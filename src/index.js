@@ -10,6 +10,7 @@ import "./index.css";
 import Main from "./Components/Main/Main";
 import NotFoundPage from "./Components/NotFoundPage/NotFoundPage";
 import AddContact from "./Components/AddContact/AddContact";
+import EditContact from "./Components/EditContact/EditContact";
 
 class App extends Component {
     state = {
@@ -41,7 +42,8 @@ class App extends Component {
                 Gender: "women",
                 Image: "39"
             }
-        ]
+        ],
+        CurrentContact: "",
     }
 
     onChangeStatus = (Id) => {
@@ -49,9 +51,9 @@ class App extends Component {
         let contact = this.state.ContactList[index];
         switch (contact.Status) {
             case "Friend": contact.Status = "Work"; break;
-            case "Work": contact.Status = "Private"; break;
-            case "Private": contact.Status = "Family"; break;
-            case "Family": contact.Status = "Friend"; break;
+            case "Work": contact.Status = "Family"; break;
+            case "Family": contact.Status = "Private"; break;
+            case "Private": contact.Status = "Friend"; break;
             default: break;
         }
 
@@ -88,13 +90,31 @@ class App extends Component {
         );
     }
 
+    onClickEdit =(Id)=>{
+        let contact = this.state.ContactList.find((i) => i.Id === Id);
+        this.setState({
+            CurrentContact: contact
+        });
+    }
+
+    onEditContact = (editedContact) =>{
+        let tmpList = this.state.ContactList.slice();
+        const index = tmpList.findIndex(i => i.Id === editedContact.Id);
+
+        tmpList[index] = editedContact;
+        this.setState({
+            ContactList: tmpList
+        })
+    }
+
     render() {
-        const { ContactList } = this.state;
+        const { ContactList, CurrentContact } = this.state;
         return (
             <Router>
                 <Switch>
-                    <Route path="/" exact render={() => (<Main List={ContactList} onChangeStatus={this.onChangeStatus} onClickDelete={this.onClickDelete} />)} />
+                    <Route path="/" exact render={() => (<Main List={ContactList} onChangeStatus={this.onChangeStatus} onClickDelete={this.onClickDelete} onClickEdit={this.onClickEdit}/>)} />
                     <Route path="/add-new-contact" exact render={() => (<AddContact onAddNewContact={this.onAddNewContact}/>)}/>
+                    <Route path="/edit-contact" exact render={() => (<EditContact onEditContact={this.onEditContact} CurrentContact={CurrentContact} />)}/>
                     <Route path="*"component={NotFoundPage}/>
                 </Switch>
             </Router>

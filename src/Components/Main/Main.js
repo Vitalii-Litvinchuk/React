@@ -6,7 +6,7 @@ import ContactList from "./Contact list/ContactList";
 import SideBar from "../SideBar/SideBar"
 
 
-const Main = ({ List, onChangeStatus, onClickDelete }) => {
+const Main = ({ List, onChangeStatus, onClickDelete,onClickEdit }) => {
     return (
         <Fragment>
             <div className="container bootstrap snippets bootdeys bootdey">
@@ -50,7 +50,7 @@ const Main = ({ List, onChangeStatus, onClickDelete }) => {
                                         </div>
                                     </div>
                                 </div>
-                                <ContactList List={List} onChangeStatus={onChangeStatus} onClickDelete={onClickDelete} />
+                                <ContactList List={List} onChangeStatus={onChangeStatus} onClickDelete={onClickDelete} onClickEdit={onClickEdit}/>
                             </form>
                         </div>
                     </div>

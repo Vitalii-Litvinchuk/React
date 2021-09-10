@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom"
+
 // Import components
 import GetStatus from "../../Status/Status";
 
 
-const ContactItem = ({  Name, Email, Phone, Status, Gender, Image, onChangeStatus, onClickDelete }) => {
+const ContactItem = ({ Name, Email, Phone, Status, Gender, Image, onChangeStatus, onClickDelete, onClickEdit }) => {
 
     const img = `https://api.randomuser.me/portraits/${Gender}/${Image}.jpg`
     return (
@@ -33,7 +35,9 @@ const ContactItem = ({  Name, Email, Phone, Status, Gender, Image, onChangeStatu
                 </div>
                 <div className="row">
                     <div className="icons">
-                        <i className="far fa-edit fa-2x"></i>
+                        <Link to="/edit-contact">
+                            <i className="far fa-edit fa-2x" onClick={onClickEdit}></i>
+                        </Link>
                         <i className="far fa-trash-alt fa-2x" onClick={onClickDelete}></i>
                     </div>
                 </div>
