@@ -83,7 +83,7 @@ class AddContact extends Component {
         if (isRedirect) {
             return <Redirect to="/" />
         }
-        const {Name,Phone,Email,Status,Gender,Image} = this.state
+        const { Name, Phone, Email, Status, Gender, Image } = this.state;
         let img = "";
         if (Image === "" || Image === null)
             img = "https://upload.wikimedia.org/wikipedia/commons/5/50/User_icon-cp.svg"

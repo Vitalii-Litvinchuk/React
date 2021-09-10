@@ -75,9 +75,10 @@ class App extends Component {
         })
     }
 
-    onAddNewContact = (newContact) =>{
+    onAddNewContact = (newContact) => {
         const { Name, Email, Phone, Status, Image, Gender } = newContact;
-        this.state.ContactList.unshift(
+        const tmpList = this.state.ContactList.slice();
+        tmpList.unshift(
             {
                 Id: uuidv4(),
                 Name,
@@ -88,16 +89,19 @@ class App extends Component {
                 Image
             }
         );
+        this.setState({
+            ContactList: tmpList
+        })
     }
 
-    onClickEdit =(Id)=>{
+    onClickEdit = (Id) => {
         let contact = this.state.ContactList.find((i) => i.Id === Id);
         this.setState({
             CurrentContact: contact
         });
     }
 
-    onEditContact = (editedContact) =>{
+    onEditContact = (editedContact) => {
         let tmpList = this.state.ContactList.slice();
         const index = tmpList.findIndex(i => i.Id === editedContact.Id);
 
@@ -112,10 +116,10 @@ class App extends Component {
         return (
             <Router>
                 <Switch>
-                    <Route path="/" exact render={() => (<Main List={ContactList} onChangeStatus={this.onChangeStatus} onClickDelete={this.onClickDelete} onClickEdit={this.onClickEdit}/>)} />
-                    <Route path="/add-new-contact" exact render={() => (<AddContact onAddNewContact={this.onAddNewContact}/>)}/>
-                    <Route path="/edit-contact" exact render={() => (<EditContact onEditContact={this.onEditContact} CurrentContact={CurrentContact} />)}/>
-                    <Route path="*"component={NotFoundPage}/>
+                    <Route path="/" exact render={() => (<Main List={ContactList} onChangeStatus={this.onChangeStatus} onClickDelete={this.onClickDelete} onClickEdit={this.onClickEdit} />)} />
+                    <Route path="/add-new-contact" exact render={() => (<AddContact onAddNewContact={this.onAddNewContact} />)} />
+                    <Route path="/edit-contact" exact render={() => (<EditContact onEditContact={this.onEditContact} CurrentContact={CurrentContact} />)} />
+                    <Route path="*" component={NotFoundPage} />
                 </Switch>
             </Router>
 
