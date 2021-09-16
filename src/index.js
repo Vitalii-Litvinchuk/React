@@ -43,6 +43,7 @@ class App extends Component {
                 Image: "39"
             }
         ],
+        PaintList: null,
         CurrentContact: "",
     }
 
@@ -111,12 +112,34 @@ class App extends Component {
         })
     }
 
+    onChangeSearch = (e) =>{
+        const someString = e.target.value.toLowerCase(); 
+        const ContactList = this.state.ContactList;
+
+        if (someString !== "") 
+        {
+            const tmpList = [];
+
+            ContactList.forEach(element => {
+                const name = element.Name.toLowerCase();
+                if (name.includes(someString)) 
+                    tmpList.push(element);
+            });
+
+            this.setState({PaintList: tmpList})
+
+        }
+        else this.setState({ PaintList: null })
+    }
+    
     render() {
-        const { ContactList, CurrentContact } = this.state;
+        let { PaintList, ContactList, CurrentContact } = this.state;
+        if (PaintList !== null) 
+            ContactList = PaintList;
         return (
             <Router>
                 <Switch>
-                    <Route path="/" exact render={() => (<Main List={ContactList} onChangeStatus={this.onChangeStatus} onClickDelete={this.onClickDelete} onClickEdit={this.onClickEdit} />)} />
+                    <Route path="/" exact render={() => (<Main List={ContactList} onChangeStatus={this.onChangeStatus} onClickDelete={this.onClickDelete} onClickEdit={this.onClickEdit} onChangeSearch={this.onChangeSearch} />)} />
                     <Route path="/add-new-contact" exact render={() => (<AddContact onAddNewContact={this.onAddNewContact} />)} />
                     <Route path="/edit-contact" exact render={() => (<EditContact onEditContact={this.onEditContact} CurrentContact={CurrentContact} />)} />
                     <Route path="*" component={NotFoundPage} />

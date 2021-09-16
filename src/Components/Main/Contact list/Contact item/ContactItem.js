@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 
 // Import components
-import GetStatus from "../../Status/Status";
+import GetStatus from "./Status/Status"
 
 
 const ContactItem = ({ Name, Email, Phone, Status, Gender, Image, onChangeStatus, onClickDelete, onClickEdit }) => {

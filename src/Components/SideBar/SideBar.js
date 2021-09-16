@@ -20,22 +20,22 @@ const SideBar = ({ Contacts }) => {
         <div className="title">All contacts<span>{Contacts.length}</span></div>
         <div className="list">
           <div className="input-group">
-            <input type="text" className="contacts-search" placeholder="Search" />
+            <input type="text" className="contacts-search rounded" placeholder="Search" />
           </div>
-          <div className="head">Labels</div>
+          <div className="head rounded">Labels</div>
           <div className="unit">
-            <div className="lab lab-success">Work</div><span>{countWork}</span>
-          </div>
-          <div className="unit">
-            <div className="lab lab-primary">Family</div><span>{countFamily}</span>
+            <div className="lab lab-success rounded-pill">Work</div><span>{countWork}</span>
           </div>
           <div className="unit">
-            <div className="lab lab-danger">Private</div><span>{countPrivate}</span>
+            <div className="lab lab-primary rounded-pill">Family</div><span>{countFamily}</span>
           </div>
           <div className="unit">
-            <div className="lab lab-warning">Friends</div><span>{countFriend}</span>
+            <div className="lab lab-danger rounded-pill">Private</div><span>{countPrivate}</span>
           </div>
-          <button type="button" className="btn btn-primary font-weight-700">Add new label</button>
+          <div className="unit">
+            <div className="lab lab-warning rounded-pill">Friends</div><span>{countFriend}</span>
+          </div>
+          {/* <button type="button" className="btn btn-primary font-weight-700">Add new label</button> */}
         </div>
       </div>
     </div>
