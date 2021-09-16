@@ -19,9 +19,9 @@ const SideBar = ({ Contacts }) => {
       <div className="contacts-labels">
         <div className="title">All contacts<span>{Contacts.length}</span></div>
         <div className="list">
-          <div className="input-group">
+          {/* <div className="input-group">
             <input type="text" className="contacts-search rounded" placeholder="Search" />
-          </div>
+          </div> */}
           <div className="head rounded">Labels</div>
           <div className="unit">
             <div className="lab lab-success rounded-pill">Work</div><span>{countWork}</span>

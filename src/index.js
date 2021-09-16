@@ -66,14 +66,26 @@ class App extends Component {
     }
 
     onClickDelete = (Id) => {
-        const index = this.state.ContactList.findIndex(e => e.Id === Id);
-        const partTempListOne = this.state.ContactList.slice(0, index);
-        const partTempListTwo = this.state.ContactList.slice(index + 1);
-        const tempList = [...partTempListOne, ...partTempListTwo]
+        let index = this.state.ContactList.findIndex(e => e.Id === Id);
+        let partTempListOne = this.state.ContactList.slice(0, index);
+        let partTempListTwo = this.state.ContactList.slice(index + 1);
+        let tempList = [...partTempListOne, ...partTempListTwo]
+
 
         this.setState({
             ContactList: tempList
         })
+
+        if (this.state.PaintList !== null) {
+            index = this.state.PaintList.findIndex(e => e.Id === Id);
+            partTempListOne = this.state.PaintList.slice(0, index);
+            partTempListTwo = this.state.PaintList.slice(index + 1);
+            tempList = [...partTempListOne, ...partTempListTwo]
+
+            this.setState({
+                PaintList: tempList
+            })
+        }
     }
 
     onAddNewContact = (newContact) => {
@@ -112,29 +124,28 @@ class App extends Component {
         })
     }
 
-    onChangeSearch = (e) =>{
-        const someString = e.target.value.toLowerCase(); 
+    onChangeSearch = (e) => {
+        const someString = e.target.value.toLowerCase();
         const ContactList = this.state.ContactList;
 
-        if (someString !== "") 
-        {
+        if (someString !== "") {
             const tmpList = [];
 
             ContactList.forEach(element => {
                 const name = element.Name.toLowerCase();
-                if (name.includes(someString)) 
+                if (name.includes(someString))
                     tmpList.push(element);
             });
 
-            this.setState({PaintList: tmpList})
+            this.setState({ PaintList: tmpList })
 
         }
         else this.setState({ PaintList: null })
     }
-    
+
     render() {
         let { PaintList, ContactList, CurrentContact } = this.state;
-        if (PaintList !== null) 
+        if (PaintList !== null)
             ContactList = PaintList;
         return (
             <Router>
