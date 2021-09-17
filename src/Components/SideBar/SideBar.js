@@ -1,19 +1,22 @@
 
-const SideBar = ({ Contacts }) => {
+const SideBar = ({ Contacts, IsRequest }) => {
+  
   let countWork = 0;
   let countPrivate = 0;
   let countFriend = 0;
   let countFamily = 0;
-  Contacts.forEach(element => {
-    switch (element.Status) {
-      case "Friend": ++countFriend; break;
-      case "Work": ++countWork; break;
-      case "Private": ++countPrivate; break;
-      case "Family": ++countFamily; break;
-      default: break;
+  if (!IsRequest) {
+    Contacts.forEach(element => {
+      switch (element.Status) {
+        case "Friend": ++countFriend; break;
+        case "Work": ++countWork; break;
+        case "Private": ++countPrivate; break;
+        case "Family": ++countFamily; break;
+        default: break;
+      }
+    });
   }
-  });
-
+    
   return (
     <div className="col-lg-3 col-md-4 col-sm-12">
       <div className="contacts-labels">

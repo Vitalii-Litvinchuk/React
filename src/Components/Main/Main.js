@@ -6,13 +6,13 @@ import ContactList from "./Contact list/ContactList";
 import SideBar from "../SideBar/SideBar"
 
 
-const Main = ({ List, onChangeStatus, onClickDelete, onClickEdit, onChangeSearch }) => {
+const Main = ({ List, onChangeStatus, onClickDelete, onClickEdit, onChangeSearch,IsRequest }) => {
     return (
         <Fragment>
             <div className="container bootstrap snippets bootdeys bootdey">
                 <div className="row decor-default">
 
-                    <SideBar Contacts={List} />
+                    <SideBar Contacts={List} IsRequest={IsRequest} />
                     <div className="col-lg-9 col-md-8 col-sm-12">
                         <div className="contacts-list">
                             <Link className="title" to="/add-new-contact">
@@ -54,7 +54,7 @@ const Main = ({ List, onChangeStatus, onClickDelete, onClickEdit, onChangeSearch
                                         </div> */}
                                     </div>
                                 </div>
-                                <ContactList List={List} onChangeStatus={onChangeStatus} onClickDelete={onClickDelete} onClickEdit={onClickEdit} />
+                                <ContactList List={List} onChangeStatus={onChangeStatus} onClickDelete={onClickDelete} onClickEdit={onClickEdit} IsRequest={IsRequest}/>
                             </form>
                         </div>
                     </div>
