@@ -43,7 +43,7 @@ class App extends Component {
                 Image: "39"
             }
         ],
-        PaintList: null,
+        SearchValue: "",
         CurrentContact: "",
     }
 
@@ -71,21 +71,9 @@ class App extends Component {
         let partTempListTwo = this.state.ContactList.slice(index + 1);
         let tempList = [...partTempListOne, ...partTempListTwo]
 
-
         this.setState({
             ContactList: tempList
         })
-
-        if (this.state.PaintList !== null) {
-            index = this.state.PaintList.findIndex(e => e.Id === Id);
-            partTempListOne = this.state.PaintList.slice(0, index);
-            partTempListTwo = this.state.PaintList.slice(index + 1);
-            tempList = [...partTempListOne, ...partTempListTwo]
-
-            this.setState({
-                PaintList: tempList
-            })
-        }
     }
 
     onAddNewContact = (newContact) => {
@@ -126,27 +114,24 @@ class App extends Component {
 
     onChangeSearch = (e) => {
         const someString = e.target.value.toLowerCase();
-        const ContactList = this.state.ContactList;
+        this.setState({
+            SearchValue: someString
+        });
+    }
 
-        if (someString !== "") {
+    render() {
+        let { SearchValue, ContactList, CurrentContact } = this.state;
+        if (SearchValue !== "") {
             const tmpList = [];
 
             ContactList.forEach(element => {
                 const name = element.Name.toLowerCase();
-                if (name.includes(someString))
+                if (name.includes(SearchValue))
                     tmpList.push(element);
             });
-
-            this.setState({ PaintList: tmpList })
-
+            ContactList = tmpList;
         }
-        else this.setState({ PaintList: null })
-    }
 
-    render() {
-        let { PaintList, ContactList, CurrentContact } = this.state;
-        if (PaintList !== null)
-            ContactList = PaintList;
         return (
             <Router>
                 <Switch>
@@ -155,7 +140,7 @@ class App extends Component {
                     <Route path="/edit-contact" exact render={() => (<EditContact onEditContact={this.onEditContact} CurrentContact={CurrentContact} />)} />
                     <Route path="*" component={NotFoundPage} />
                 </Switch>
-            </Router>
+            </Router >
 
         )
     }
