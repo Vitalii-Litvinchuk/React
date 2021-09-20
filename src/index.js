@@ -15,8 +15,12 @@ import EditContact from "./Components/EditContact/EditContact";
 // Import Services
 import APIService from "./Services/APIService";
 
+// Import store
+import store from './store';
+import { Provider } from "react-redux";
+
 class App extends Component {
-    
+
     apiService = new APIService();
 
     state = {
@@ -55,7 +59,7 @@ class App extends Component {
         IsRequest: true,
     }
 
-  
+
     // componentDidUpdate(){
     //     console.log("componentDidUpdate");
     // }
@@ -73,7 +77,7 @@ class App extends Component {
     //     console.log("componentWillUnmount");
     // }
 
-    componentDidMount(){
+    componentDidMount() {
         // console.log("componentDidMount");
         this.apiService.fetchContactList(this.state.IsRequest).then(currentListData => {
             this.setState({
@@ -206,14 +210,16 @@ class App extends Component {
         }
 
         return (
-            <Router>
-                <Switch>
-                    <Route path="/" exact render={() => (<Main List={ContactList} onChangeStatus={this.onChangeStatus} onClickDelete={this.onClickDelete} onClickEdit={this.onClickEdit} onChangeSearch={this.onChangeSearch} IsRequest={IsRequest} />)} />
-                    <Route path="/add-new-contact" exact render={() => (<AddContact onAddNewContact={this.onAddNewContact} />)} />
-                    <Route path="/edit-contact" exact render={() => (<EditContact onEditContact={this.onEditContact} CurrentContact={CurrentContact} />)} />
-                    <Route path="*" component={NotFoundPage} />
-                </Switch>
-            </Router >
+            <Provider store={store}>
+                <Router>
+                    <Switch>
+                        <Route path="/" exact render={() => (<Main List={ContactList} onChangeStatus={this.onChangeStatus} onClickDelete={this.onClickDelete} onClickEdit={this.onClickEdit} onChangeSearch={this.onChangeSearch} IsRequest={IsRequest} />)} />
+                        <Route path="/add-new-contact" exact render={() => (<AddContact onAddNewContact={this.onAddNewContact} />)} />
+                        <Route path="/edit-contact" exact render={() => (<EditContact onEditContact={this.onEditContact} CurrentContact={CurrentContact} />)} />
+                        <Route path="*" component={NotFoundPage} />
+                    </Switch>
+                </Router >
+            </Provider>
 
         )
     }

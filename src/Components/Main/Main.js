@@ -1,6 +1,9 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 
+// For redux
+import { connect } from "react-redux";
+
 // Import components
 import ContactList from "./Contact list/ContactList";
 import SideBar from "../SideBar/SideBar"
@@ -63,5 +66,14 @@ const Main = ({ List, onChangeStatus, onClickDelete, onClickEdit, onChangeSearch
         </Fragment>
     )
 }
+
+// const mapStateToProps = ({ ListReducer }) => {
+//     return { ListReducer };
+// }
+
+// const mapDispatchToProps = {
+// }
+
+// export default connect(mapStateToProps, mapDispatchToProps)(Main);
 
 export default Main;
