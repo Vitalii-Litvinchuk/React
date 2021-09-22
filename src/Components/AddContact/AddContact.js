@@ -3,12 +3,15 @@ import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom"
 
 // Import actions
-import { onGetName, onGetEmail, onGetGender, onGetImage, onGetPhone, onGetStatus, onSubmit, ChangeCreated } from "../../Actions/AddContactActions";
+import { onGetName, onGetEmail, onGetGender, onGetImage, onGetPhone, onGetStatus, onSubmit, ToDefault } from "../../Actions/AddContactActions";
 import { onAddNewContact } from "../../Actions/ListActions";
 
-const AddContact = ({ Name, Phone, Email, Status, Gender, Image, isRedirect, isCreated, onGetName, onGetEmail, onGetGender, onGetImage, onGetPhone, onGetStatus, onSubmit, ChangeCreated, onAddNewContact }) => {
+const AddContact = ({ Name, Phone, Email, Status, Gender, Image, isRedirect, isCreated,
+     onGetName, onGetEmail, onGetGender, onGetImage, onGetPhone, onGetStatus, onSubmit, ToDefault, onAddNewContact }) => {
+
     if (isRedirect && isCreated) {
         onAddNewContact({ Name, Phone, Email, Status, Gender, Image });
+        ToDefault();
         return <Redirect to="/" />
     }
     let img = "";
@@ -76,7 +79,7 @@ const mapStateToProps = ({ AddContactReducer }) => {
 }
 
 const mapDispatchToProps = {
-    onGetName, onGetEmail, onGetGender, onGetImage, onGetPhone, onGetStatus, onSubmit, ChangeCreated, onAddNewContact
+    onGetName, onGetEmail, onGetGender, onGetImage, onGetPhone, onGetStatus, onSubmit, ToDefault, onAddNewContact
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddContact);

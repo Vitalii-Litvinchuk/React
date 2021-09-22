@@ -40,14 +40,13 @@ export const onGetImage = (e) => {
     }
 }
 
-export const ChangeCreated = () =>{
+export const ToDefault = () =>{
     return {
-        type: "CHANGECREATEDANDREDIRECT"
+        type: "TODEFAULT",
     }
 }
 
 export const onSubmit = (e) => {
-    console.log("Submit");
     return {
         type: "SUBMIT",
     }

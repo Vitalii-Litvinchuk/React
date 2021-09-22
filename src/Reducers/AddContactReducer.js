@@ -42,20 +42,20 @@ const AddContactReducer = (state = initialState, action) => {
                 Image: action.value
             }
         case "SUBMIT":
-        return {
-            ...state,
-            Name: "",
-            Phone: "",
-            Email: "",
-            Status: "Friend",
-            Gender: "men",
-            Image: "",
-            isRedirect: true,
-            isCreated: true
-        }
-        case "CHANGECREATEDANDREDIRECT":
             return {
                 ...state,
+                isRedirect: true,
+                isCreated: true
+            }
+        case "ToDefault":
+            return {
+                ...state,
+                Name: "",
+                Phone: "",
+                Email: "",
+                Status: "Friend",
+                Gender: "men",
+                Image: "",
                 isCreated: false,
                 isRedirect: false
             }

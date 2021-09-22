@@ -26,7 +26,6 @@ export const onChangeStatus = (Id) => {
 
 export const onAddNewContact = (newContact) => {
     const { Name, Phone, Email, Status, Gender, Image } = newContact;
-    console.log(newContact);
     const contact =
     {
         Name,
