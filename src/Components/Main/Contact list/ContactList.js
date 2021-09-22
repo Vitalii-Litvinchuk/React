@@ -10,22 +10,38 @@ import { getAllList } from "../../../Actions/ListActions";
 // Import Services
 import APIService from "../../../Services/APIService";
 
-const ContactList = ({ ContactList, IsRequest, getAllList }) => {
+let ones = true;
+
+const ContactList = ({ ContactList, IsRequest, SearchList, isSearch,
+    getAllList }) => {
 
     useEffect(() => {
-        let api = new APIService();
-        api.fetchContactList().then(data => {
-            getAllList(data.List)
-        });
-    }, []);
+        if (ones) {
+            let api = new APIService();
+            api.fetchContactList().then(data => {
+                getAllList(data.List)
+            });
+            ones = !ones;
+        }
+    }, []); // [ContactList]); - trouble with Change/Get status
 
-    const item = ContactList.map(listItem => {
-        return (
-            <ContactItem key={listItem.Id}
-                {...listItem}
-            />
-        )
-    });
+    let item;
+    if (isSearch)
+        item = SearchList.map(listItem => {
+            return (
+                <ContactItem key={listItem.Id}
+                    {...listItem}
+                />
+            )
+        });
+    else
+        item = ContactList.map(listItem => {
+            return (
+                <ContactItem key={listItem.Id}
+                    {...listItem}
+                />
+            )
+        });
 
     if (IsRequest && ContactList.length === 0)
         return (
@@ -43,12 +59,12 @@ const ContactList = ({ ContactList, IsRequest, getAllList }) => {
 }
 
 const mapStateToProps = ({ ListReducer }) => {
-    const { ContactList, IsRequest } = ListReducer;
-    return { ContactList, IsRequest };
+    const { ContactList, IsRequest, SearchList, isSearch } = ListReducer;
+    return { ContactList, IsRequest, SearchList, isSearch };
 }
 
 const mapDispatchToProps = {
-    getAllList,
+    getAllList
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactList);

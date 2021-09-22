@@ -1,23 +1,34 @@
 import { connect } from "react-redux";
 
-const SideBar = ({ ContactList, IsRequest }) => {
-  
+const SideBar = ({ ContactList, IsRequest, SearchList,isSearch }) => {
+
   let countWork = 0;
   let countPrivate = 0;
   let countFriend = 0;
   let countFamily = 0;
   if (!IsRequest) {
-    ContactList.forEach(element => {
-      switch (element.Status) {
-        case "Friend": ++countFriend; break;
-        case "Work": ++countWork; break;
-        case "Private": ++countPrivate; break;
-        case "Family": ++countFamily; break;
-        default: break;
-      }
-    });
+    if (SearchList.length !== 0)
+      SearchList.forEach(element => {
+        switch (element.Status) {
+          case "Friend": ++countFriend; break;
+          case "Work": ++countWork; break;
+          case "Private": ++countPrivate; break;
+          case "Family": ++countFamily; break;
+          default: break;
+        }
+      });
+    else if (!isSearch)
+      ContactList.forEach(element => {
+        switch (element.Status) {
+          case "Friend": ++countFriend; break;
+          case "Work": ++countWork; break;
+          case "Private": ++countPrivate; break;
+          case "Family": ++countFamily; break;
+          default: break;
+        }
+      });
   }
-    
+
   return (
     <div className="col-lg-3 col-md-4 col-sm-12">
       <div className="contacts-labels">
@@ -47,8 +58,8 @@ const SideBar = ({ ContactList, IsRequest }) => {
 }
 
 const mapStateToProps = ({ ListReducer }) => {
-  const {ContactList} = ListReducer;
-  return {ContactList};
+  const { ContactList, IsRequest, SearchList, isSearch } = ListReducer;
+  return { ContactList, IsRequest, SearchList, isSearch };
 }
 
 export default connect(mapStateToProps)(SideBar);

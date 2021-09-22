@@ -1,5 +1,12 @@
 import { Component, Fragment } from "react"
+import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom"
+
+// Import services
+import APIService from "../../Services/APIService";
+
+// Import actions
+import { onEditContact } from "../../Actions/ListActions";
 
 class AddContact extends Component {
 
@@ -72,7 +79,14 @@ class AddContact extends Component {
             Gender,
             Image
         }
-        onEditContact(contact);
+
+        let tempList = this.props.ContactList.slice();
+        const index = tempList.findIndex(i => i.Id === contact.Id);
+
+        tempList[index] = contact;
+        new APIService().updateDatabse(tempList);
+
+        onEditContact(tempList);
         this.setState({
             isRedirect: true
         })
@@ -144,4 +158,13 @@ class AddContact extends Component {
     }
 }
 
-export default AddContact
+const mapStateToProps = ({ ListReducer }) => {
+    const { ContactList, CurrentContact } = ListReducer;
+    return { ContactList, CurrentContact };
+}
+
+const mapDispatchToProps = {
+    onEditContact
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddContact)

@@ -6,7 +6,6 @@ const initialState = {
     Gender: "men",
     Image: "",
     isRedirect: false,
-    isCreated: false
 }
 
 const AddContactReducer = (state = initialState, action) => {
@@ -45,9 +44,8 @@ const AddContactReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isRedirect: true,
-                isCreated: true
             }
-        case "ToDefault":
+        case "TODEFAULT":
             return {
                 ...state,
                 Name: "",
@@ -56,7 +54,6 @@ const AddContactReducer = (state = initialState, action) => {
                 Status: "Friend",
                 Gender: "men",
                 Image: "",
-                isCreated: false,
                 isRedirect: false
             }
         default: return state;

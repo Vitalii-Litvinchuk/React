@@ -8,14 +8,16 @@ import { connect } from "react-redux";
 import ContactList from "./Contact list/ContactList";
 import SideBar from "../SideBar/SideBar"
 
+// Import actions
+import { onChangeSearch } from "../../Actions/ListActions";
 
-const Main = ({ onChangeSearch}) => {
+const Main = ({ ContactList: CL, onChangeSearch }) => {
     return (
         <Fragment>
             <div className="container bootstrap snippets bootdeys bootdey">
                 <div className="row decor-default">
 
-                    <SideBar/>
+                    <SideBar />
                     <div className="col-lg-9 col-md-8 col-sm-12">
                         <div className="contacts-list">
                             <Link className="title" to="/add-new-contact">
@@ -26,7 +28,7 @@ const Main = ({ onChangeSearch}) => {
 
                             <form className="ac-custom ac-checkbox ac-checkmark" autoComplete="off">
                                 <div className="input-group ml-2 ">
-                                    <input type="text" className="rounded contacts-list-search" placeholder="Search" onChange={(e) => onChangeSearch(e)} />
+                                    <input type="text" className="rounded contacts-list-search" placeholder="Search" onChange={(e) => onChangeSearch(SearchElements(e.target.value.toLowerCase(), CL))} />
                                 </div>
                                 <div className="unit head">
                                     <div className="field name">
@@ -57,7 +59,7 @@ const Main = ({ onChangeSearch}) => {
                                         </div> */}
                                     </div>
                                 </div>
-                                <ContactList/>
+                                <ContactList />
                             </form>
                         </div>
                     </div>
@@ -68,11 +70,24 @@ const Main = ({ onChangeSearch}) => {
 }
 
 const mapStateToProps = ({ ListReducer }) => {
-    return { ListReducer };
+    const { ContactList } = ListReducer
+    return { ContactList };
 }
 
 const mapDispatchToProps = {
-    
+    onChangeSearch
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
+
+function SearchElements(SearchValue, ContactList) {
+    const tempList = [];
+    let search = true;
+    if (SearchValue !== "")
+        ContactList.forEach(element => {
+            if (element.Name.toLowerCase().includes(SearchValue))
+                tempList.push(element);
+        });
+        else search = false;
+    return { tempList, search };
+}

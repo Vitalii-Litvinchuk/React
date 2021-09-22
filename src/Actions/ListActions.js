@@ -5,63 +5,46 @@ export const getAllList = (list) => {
     }
 }
 
-export const onChangeStatus = (Id) => {
+export const onChangeStatus = (tempList) => {
     return {
         type: "CHANGESTATUS",
-        Id: Id
+        tempList
     }
 }
 
-// onClickDelete = (Id) => {
-//     let index = this.state.ContactList.findIndex(e => e.Id === Id);
-//     let partTempListOne = this.state.ContactList.slice(0, index);
-//     let partTempListTwo = this.state.ContactList.slice(index + 1);
-//     let tempList = [...partTempListOne, ...partTempListTwo]
-
-//     this.setState({
-//         ContactList: tempList
-//     })
-//     this.apiService.updateDatabse(tempList);
-// }
-
-export const onAddNewContact = (newContact) => {
-    const { Name, Phone, Email, Status, Gender, Image } = newContact;
-    const contact =
-    {
-        Name,
-        Phone,
-        Email,
-        Status,
-        Gender,
-        Image
+export const onClickDelete = (tempList) => {
+    return {
+        type: "DELETE",
+        tempList
     }
+}
+
+export const onAddNewContact = (newContactList) => {
     return {
         type: "ADDNEWCONTACT",
-        newContact: contact
+        newContactList
     }
 }
 
-// onClickEdit = (Id) => {
-//     let contact = this.state.ContactList.find((i) => i.Id === Id);
-//     this.setState({
-//         CurrentContact: contact
-//     });
-// }
+export const onChangeSearch = ({ tempList: SearchList, search: isSearch}) => {
+    return {
+        type: "SEARCH",
+        SearchList,
+        isSearch
+    }
+}
 
-// onEditContact = (editedContact) => {
-//     let tempList = this.state.ContactList.slice();
-//     const index = tempList.findIndex(i => i.Id === editedContact.Id);
+export const onClickEdit = (CurrentContact) => {
+    return{
+        type: "EDIT",
+        CurrentContact
+    }
+}
 
-//     tempList[index] = editedContact;
-//     this.setState({
-//         ContactList: tempList
-//     })
-//     this.apiService.updateDatabse(tempList);
-// }
+export const onEditContact = (EditedList) => {
+    return{
+        type: "EDITED",
+        EditedList
+    }
+}
 
-// onChangeSearch = (e) => {
-//     const someString = e.target.value.toLowerCase();
-//     this.setState({
-//         SearchValue: someString
-//     });
-// }

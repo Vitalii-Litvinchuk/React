@@ -4,12 +4,15 @@ import { Link } from "react-router-dom"
 // Import components
 import GetStatus from "./Status/Status"
 
+// Import services
+import APIService from "../../../../Services/APIService"
+
 // Import actions
-import { onChangeStatus } from "../../../../Actions/ListActions"
+import { onChangeStatus, onClickDelete, onClickEdit } from "../../../../Actions/ListActions"
 
-const ContactItem = ({Id ,Name, Email, Phone, Status, Gender, Image, onChangeStatus }) => {
 
-    //  onChangeStatus, onClickDelete, onClickEdit
+const ContactItem = ({ ContactList, Id, Name, Email, Phone, Status, Gender, Image,
+    onChangeStatus, onClickDelete, onClickEdit }) => {
 
     const img = `https://api.randomuser.me/portraits/${Gender}/${Image}.jpg`
     return (
@@ -27,7 +30,7 @@ const ContactItem = ({Id ,Name, Email, Phone, Status, Gender, Image, onChangeSta
                     </div>
                     <div className="col-4">
                         {Name}
-                        <GetStatus Status={Status} onChangeStatus={() => {onChangeStatus(Id)}} />
+                        <GetStatus Status={Status} onChangeStatus={() => { onChangeStatus(changeStatus(ContactList, Id)) }} />
                     </div>
                 </div>
             </div>
@@ -41,9 +44,9 @@ const ContactItem = ({Id ,Name, Email, Phone, Status, Gender, Image, onChangeSta
                 <div className="row">
                     <div className="icons">
                         <Link to="/edit-contact">
-                            {/* <i className="far fa-edit fa-2x" onClick={onClickEdit}></i> */}
+                            <i className="far fa-edit fa-2x" onClick={() => onClickEdit(ContactList[ContactList.findIndex(e => e.Id === Id)])}></i>
                         </Link>
-                        {/* <i className="far fa-trash-alt fa-2x" onClick={onClickDelete}></i> */}
+                        <i className="far fa-trash-alt fa-2x" onClick={() => onClickDelete( Delete(Id, ContactList))}></i>
                     </div>
                 </div>
             </div>
@@ -52,11 +55,40 @@ const ContactItem = ({Id ,Name, Email, Phone, Status, Gender, Image, onChangeSta
 }
 
 const mapStateToProps = ({ ListReducer }) => {
-    return ListReducer;
+    const {ContactList} = ListReducer;
+    return {ContactList};
 }
 
 const mapDispatchToProps = {
-    onChangeStatus,
+    onChangeStatus, onClickDelete, onClickEdit
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(ContactItem);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactItem);
+
+function Delete(Id, ContactList){
+    let index = ContactList.findIndex(e => e.Id === Id);
+    let partTempListOne = ContactList.slice(0, index);
+    let partTempListTwo = ContactList.slice(index + 1);
+    let tempList = [...partTempListOne, ...partTempListTwo]
+    
+    new APIService().updateDatabse(tempList);
+
+    return tempList;
+}
+
+function changeStatus(ContactList, Id) {
+    const index = ContactList.findIndex(e => e.Id === Id);
+    let contact = ContactList[index];
+    switch (contact.Status) {
+        case "Friend": contact.Status = "Work"; break;
+        case "Work": contact.Status = "Family"; break;
+        case "Family": contact.Status = "Private"; break;
+        case "Private": contact.Status = "Friend"; break;
+        default: break;
+    }
+
+    let tempList = ContactList.slice();
+    tempList[index] = contact;
+    new APIService().updateDatabse(tempList);
+    return tempList;
+}
