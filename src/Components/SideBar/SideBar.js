@@ -1,12 +1,13 @@
+import { connect } from "react-redux";
 
-const SideBar = ({ Contacts, IsRequest }) => {
+const SideBar = ({ ContactList, IsRequest }) => {
   
   let countWork = 0;
   let countPrivate = 0;
   let countFriend = 0;
   let countFamily = 0;
   if (!IsRequest) {
-    Contacts.forEach(element => {
+    ContactList.forEach(element => {
       switch (element.Status) {
         case "Friend": ++countFriend; break;
         case "Work": ++countWork; break;
@@ -20,7 +21,7 @@ const SideBar = ({ Contacts, IsRequest }) => {
   return (
     <div className="col-lg-3 col-md-4 col-sm-12">
       <div className="contacts-labels">
-        <div className="title">All contacts<span>{Contacts.length}</span></div>
+        <div className="title">All contacts<span>{ContactList.length}</span></div>
         <div className="list">
           {/* <div className="input-group">
             <input type="text" className="contacts-search rounded" placeholder="Search" />
@@ -45,4 +46,9 @@ const SideBar = ({ Contacts, IsRequest }) => {
   );
 }
 
-export default SideBar;
+const mapStateToProps = ({ ListReducer }) => {
+  const {ContactList} = ListReducer;
+  return {ContactList};
+}
+
+export default connect(mapStateToProps)(SideBar);

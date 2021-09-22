@@ -3,7 +3,7 @@ export default class APIService{
 
     URL = "https://reactlearn-acfb5-default-rtdb.firebaseio.com/contacts.json";
 
-    async fetchContactList(Request) {
+    async fetchContactList() {
         const List = await fetch(this.URL)
             .then(responce => {
                 return responce.json();
@@ -20,7 +20,7 @@ export default class APIService{
                 }
             })
             .catch(err => console.log(err))
-        return [List, !Request];
+        return List;
     }
 
     updateDatabse = (List) => {

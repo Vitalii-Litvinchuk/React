@@ -1,18 +1,33 @@
+import { useEffect } from "react";
+import { connect } from "react-redux";
+
 // Import components
 import ContactItem from "./Contact item/ContactItem";
 
-const ContactList = ({ List, onChangeStatus, onClickDelete, onClickEdit, IsRequest }) => {
-    const item = List.map(listItem => {
+// Import actions
+import { getAllList } from "../../../Actions/ListActions";
+
+// Import Services
+import APIService from "../../../Services/APIService";
+
+const ContactList = ({ ContactList, IsRequest, getAllList }) => {
+
+    useEffect(() => {
+        let api = new APIService();
+        api.fetchContactList().then(data => {
+            getAllList(data.List)
+        });
+    }, []);
+
+    const item = ContactList.map(listItem => {
         return (
             <ContactItem key={listItem.Id}
                 {...listItem}
-                onChangeStatus={() => onChangeStatus(listItem.Id)}
-                onClickDelete={() => onClickDelete(listItem.Id)}
-                onClickEdit={() => onClickEdit(listItem.Id)}
             />
         )
     });
-    if (IsRequest && List.length === 0)
+
+    if (IsRequest && ContactList.length === 0)
         return (
             <section>
                 <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
@@ -27,4 +42,13 @@ const ContactList = ({ List, onChangeStatus, onClickDelete, onClickEdit, IsReque
 
 }
 
-export default ContactList;
+const mapStateToProps = ({ ListReducer }) => {
+    const { ContactList, IsRequest } = ListReducer;
+    return { ContactList, IsRequest };
+}
+
+const mapDispatchToProps = {
+    getAllList,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactList);

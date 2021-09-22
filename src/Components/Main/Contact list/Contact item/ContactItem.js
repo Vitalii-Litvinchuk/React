@@ -1,10 +1,15 @@
+import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 
 // Import components
 import GetStatus from "./Status/Status"
 
+// Import actions
+import { onChangeStatus } from "../../../../Actions/ListActions"
 
-const ContactItem = ({ Name, Email, Phone, Status, Gender, Image, onChangeStatus, onClickDelete, onClickEdit }) => {
+const ContactItem = ({Id ,Name, Email, Phone, Status, Gender, Image, onChangeStatus }) => {
+
+    //  onChangeStatus, onClickDelete, onClickEdit
 
     const img = `https://api.randomuser.me/portraits/${Gender}/${Image}.jpg`
     return (
@@ -22,7 +27,7 @@ const ContactItem = ({ Name, Email, Phone, Status, Gender, Image, onChangeStatus
                     </div>
                     <div className="col-4">
                         {Name}
-                        <GetStatus Status={Status} onChangeStatus={onChangeStatus} />
+                        <GetStatus Status={Status} onChangeStatus={() => {onChangeStatus(Id)}} />
                     </div>
                 </div>
             </div>
@@ -36,9 +41,9 @@ const ContactItem = ({ Name, Email, Phone, Status, Gender, Image, onChangeStatus
                 <div className="row">
                     <div className="icons">
                         <Link to="/edit-contact">
-                            <i className="far fa-edit fa-2x" onClick={onClickEdit}></i>
+                            {/* <i className="far fa-edit fa-2x" onClick={onClickEdit}></i> */}
                         </Link>
-                        <i className="far fa-trash-alt fa-2x" onClick={onClickDelete}></i>
+                        {/* <i className="far fa-trash-alt fa-2x" onClick={onClickDelete}></i> */}
                     </div>
                 </div>
             </div>
@@ -46,4 +51,12 @@ const ContactItem = ({ Name, Email, Phone, Status, Gender, Image, onChangeStatus
     )
 }
 
-export default ContactItem;
+const mapStateToProps = ({ ListReducer }) => {
+    return ListReducer;
+}
+
+const mapDispatchToProps = {
+    onChangeStatus,
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(ContactItem);
