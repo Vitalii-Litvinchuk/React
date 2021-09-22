@@ -8,11 +8,11 @@ import GetStatus from "./Status/Status"
 import APIService from "../../../../Services/APIService"
 
 // Import actions
-import { onChangeStatus, onClickDelete, onClickEdit } from "../../../../Actions/ListActions"
+import { onChangeStatus, onClickDelete, onClickEdit, DeleteSearch } from "../../../../Actions/ListActions"
 
 
-const ContactItem = ({ ContactList, Id, Name, Email, Phone, Status, Gender, Image,
-    onChangeStatus, onClickDelete, onClickEdit }) => {
+const ContactItem = ({ ContactList, SearchList, Id, Name, Email, Phone, Status, Gender, Image,
+    onChangeStatus, onClickDelete, onClickEdit, DeleteSearch }) => {
 
     const img = `https://api.randomuser.me/portraits/${Gender}/${Image}.jpg`
     return (
@@ -46,7 +46,7 @@ const ContactItem = ({ ContactList, Id, Name, Email, Phone, Status, Gender, Imag
                         <Link to="/edit-contact">
                             <i className="far fa-edit fa-2x" onClick={() => onClickEdit(ContactList[ContactList.findIndex(e => e.Id === Id)])}></i>
                         </Link>
-                        <i className="far fa-trash-alt fa-2x" onClick={() => onClickDelete( Delete(Id, ContactList))}></i>
+                        <i className="far fa-trash-alt fa-2x" onClick={() => { onClickDelete(Delete(Id, ContactList, true)); DeleteSearch(Delete(Id, SearchList)) }}></i>
                     </div>
                 </div>
             </div>
@@ -55,23 +55,24 @@ const ContactItem = ({ ContactList, Id, Name, Email, Phone, Status, Gender, Imag
 }
 
 const mapStateToProps = ({ ListReducer }) => {
-    const {ContactList} = ListReducer;
-    return {ContactList};
+    const { ContactList, SearchList } = ListReducer;
+    return { ContactList, SearchList };
 }
 
 const mapDispatchToProps = {
-    onChangeStatus, onClickDelete, onClickEdit
+    onChangeStatus, onClickDelete, onClickEdit, DeleteSearch
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactItem);
 
-function Delete(Id, ContactList){
+function Delete(Id, ContactList, updateDB) {
     let index = ContactList.findIndex(e => e.Id === Id);
     let partTempListOne = ContactList.slice(0, index);
     let partTempListTwo = ContactList.slice(index + 1);
     let tempList = [...partTempListOne, ...partTempListTwo]
-    
-    new APIService().updateDatabse(tempList);
+
+    if (updateDB)
+        new APIService().updateDatabse(tempList);
 
     return tempList;
 }

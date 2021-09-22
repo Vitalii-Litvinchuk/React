@@ -19,6 +19,13 @@ export const onClickDelete = (tempList) => {
     }
 }
 
+export const DeleteSearch = (tempList) => {
+    return {
+        type: "DELETESEARCH",
+        tempList
+    }
+}
+
 export const onAddNewContact = (newContactList) => {
     return {
         type: "ADDNEWCONTACT",
@@ -26,11 +33,12 @@ export const onAddNewContact = (newContactList) => {
     }
 }
 
-export const onChangeSearch = ({ tempList: SearchList, search: isSearch}) => {
+export const onChangeSearch = ({ tempList: SearchList, search: isSearch, SearchValue: InputSearch}) => {
     return {
         type: "SEARCH",
         SearchList,
-        isSearch
+        isSearch,
+        InputSearch
     }
 }
 
@@ -40,6 +48,13 @@ export const onClickEdit = (CurrentContact) => {
         CurrentContact
     }
 }
+
+export const EditSearch = (EditedList) =>{
+    return{
+        type: "EDITSEARCH",
+        EditedList
+    }
+} 
 
 export const onEditContact = (EditedList) => {
     return{

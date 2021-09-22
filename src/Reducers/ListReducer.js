@@ -1,6 +1,7 @@
 const initialState = {
     ContactList: [],
     SearchList: [],
+    InputSearch: "",
     CurrentContact: "",
     IsRequest: true,
     isSearch: false
@@ -32,17 +33,28 @@ const ListReducer = (state = initialState, action) => {
             return {
                 ...state,
                 SearchList: action.SearchList,
-                isSearch: action.isSearch
+                isSearch: action.isSearch,
+                InputSearch: action.InputSearch
             }
-            case "EDIT":
+        case "EDIT":
             return {
                 ...state,
                 CurrentContact: action.CurrentContact,
             }
-            case "EDITED":
+        case "EDITED":
             return {
                 ...state,
                 ContactList: action.EditedList,
+            }
+        case "EDITSEARCH":
+            return {
+                ...state,
+                SearchList: action.EditedList,
+            }
+        case "DELETESEARCH":
+            return {
+                ...state,
+                SearchList: action.tempList,
             }
         default: return state;
     }

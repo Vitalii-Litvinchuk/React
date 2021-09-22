@@ -11,7 +11,7 @@ import SideBar from "../SideBar/SideBar"
 // Import actions
 import { onChangeSearch } from "../../Actions/ListActions";
 
-const Main = ({ ContactList: CL, onChangeSearch }) => {
+const Main = ({ ContactList: CL,InputSearch, onChangeSearch }) => {
     return (
         <Fragment>
             <div className="container bootstrap snippets bootdeys bootdey">
@@ -28,7 +28,7 @@ const Main = ({ ContactList: CL, onChangeSearch }) => {
 
                             <form className="ac-custom ac-checkbox ac-checkmark" autoComplete="off">
                                 <div className="input-group ml-2 ">
-                                    <input type="text" className="rounded contacts-list-search" placeholder="Search" onChange={(e) => onChangeSearch(SearchElements(e.target.value.toLowerCase(), CL))} />
+                                    <input type="text" className="rounded contacts-list-search" placeholder="Search" defaultValue={InputSearch} onChange={(e) => onChangeSearch(SearchElements(e.target.value.toLowerCase(), CL))} />
                                 </div>
                                 <div className="unit head">
                                     <div className="field name">
@@ -36,7 +36,7 @@ const Main = ({ ContactList: CL, onChangeSearch }) => {
                                             <input id="cb1" name="cb1" type="checkbox" />
                                             <label htmlFor="cb1"></label>
                                             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"></svg></div>
-                                        Name
+                                        Names
                                     </div>
                                     <div className="field phone">
                                         Phone
@@ -70,8 +70,8 @@ const Main = ({ ContactList: CL, onChangeSearch }) => {
 }
 
 const mapStateToProps = ({ ListReducer }) => {
-    const { ContactList } = ListReducer
-    return { ContactList };
+    const { ContactList, InputSearch } = ListReducer
+    return { ContactList,InputSearch };
 }
 
 const mapDispatchToProps = {
@@ -89,5 +89,5 @@ function SearchElements(SearchValue, ContactList) {
                 tempList.push(element);
         });
         else search = false;
-    return { tempList, search };
+    return { tempList, search, SearchValue };
 }

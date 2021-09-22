@@ -6,7 +6,7 @@ import { Link, Redirect } from "react-router-dom"
 import APIService from "../../Services/APIService";
 
 // Import actions
-import { onEditContact } from "../../Actions/ListActions";
+import { onEditContact, EditSearch } from "../../Actions/ListActions";
 
 class AddContact extends Component {
 
@@ -67,7 +67,7 @@ class AddContact extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        const { onEditContact } = this.props;
+        const { onEditContact, EditSearch ,isSearch } = this.props;
         const { Name, Email, Phone, Status, Image, Gender } = this.state;
         const contact =
         {
@@ -85,8 +85,15 @@ class AddContact extends Component {
 
         tempList[index] = contact;
         new APIService().updateDatabse(tempList);
-
         onEditContact(tempList);
+
+        if (isSearch) {
+            tempList = this.props.SearchList.slice();
+    
+            tempList[index] = contact;
+            EditSearch(tempList);
+        }
+
         this.setState({
             isRedirect: true
         })
@@ -159,12 +166,12 @@ class AddContact extends Component {
 }
 
 const mapStateToProps = ({ ListReducer }) => {
-    const { ContactList, CurrentContact } = ListReducer;
-    return { ContactList, CurrentContact };
+    const { ContactList, CurrentContact, isSearch, SearchList } = ListReducer;
+    return { ContactList, CurrentContact, isSearch, SearchList };
 }
 
 const mapDispatchToProps = {
-    onEditContact
+    onEditContact, EditSearch
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddContact)
